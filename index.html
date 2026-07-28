@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Garena Free Fire Team</title>
+
+<style>
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:Arial,sans-serif;
+}
+
+body{
+    background:#2f2f2f;
+    color:#fff;
+}
+
+.header{
+    background:#7fd0f6;
+    text-align:center;
+    padding:20px;
+    font-size:22px;
+    font-weight:bold;
+}
+
+.container{
+    width:90%;
+    max-width:700px;
+    margin:auto;
+    padding:30px 0;
+}
+
+.title{
+    text-align:center;
+    font-size:42px;
+    font-weight:bold;
+    margin-bottom:25px;
+}
+
+.video-box{
+    border-radius:20px;
+    overflow:hidden;
+    box-shadow:0 0 20px rgba(0,0,0,.5);
+}
+
+.video-box video{
+    width:100%;
+    display:block;
+}
+
+/* 16:9 Card */
+.card{
+    width:100%;
+    aspect-ratio:16/9;
+    margin-top:40px;
+    background:#111;
+    border-radius:22px;
+    padding:20px;
+    border:3px solid transparent;
+    background-image:
+    linear-gradient(#111,#111),
+    linear-gradient(90deg,#ff0000,#ff8800,#00ff66,#00ffff,#0066ff,#aa00ff);
+    background-origin:border-box;
+    background-clip:padding-box,border-box;
+    box-shadow:0 0 20px rgba(0,0,0,.5);
+
+    display:flex;
+    flex-direction:column;
+}
+
+.info{
+    display:flex;
+    align-items:center;
+    gap:18px;
+}
+
+.info img{
+    width:90px;
+    height:90px;
+    border-radius:20px;
+}
+
+.badge{
+    display:inline-block;
+    padding:6px 14px;
+    border-radius:20px;
+    font-size:12px;
+    font-weight:bold;
+}
+
+.new{
+    background:#ff3b30;
+}
+
+.premium{
+    background:#6b5cff;
+    margin-left:8px;
+}
+
+.name{
+    font-size:28px;
+    margin-top:10px;
+    font-weight:bold;
+}
+
+.desc{
+    color:#ccc;
+    margin-top:8px;
+}
+
+.star{
+    color:gold;
+    font-size:22px;
+    margin-top:8px;
+}
+
+/* Blank Space */
+.blank{
+    flex:1;
+}
+
+.install{
+    width:90%;
+    height:58px;
+    margin:auto;
+    border:none;
+    border-radius:40px;
+    font-size:26px;
+    font-weight:bold;
+    color:#fff;
+    background:linear-gradient(90deg,#00ff80,#00dd55);
+    box-shadow:0 0 20px #00ff80;
+    cursor:pointer;
+}
+</style>
+
+</head>
+<body>
+
+<div class="header">
+Garena Free Fire Team
+</div>
+
+<div class="container">
+
+<div class="title">
+WATCH FULL VIDEO
+</div>
+
+<div class="video-box">
+<video controls poster="poster.jpg">
+<source src="video.mp4" type="video/mp4">
+</video>
+</div>
+
+<div class="card">
+
+<div class="info">
+
+<img src="icon.png">
+
+<div>
+
+<span class="badge new">NEW</span>
+<span class="badge premium">PREMIUM</span>
+
+<div class="name">
+PROXY SERVER
+</div>
+
+<div class="desc">
+FREE FIRE PROXY SERVER UNLIMITED ACCESS
+</div>
+
+<div class="star">
+★★★★★
+</div>
+
+</div>
+
+</div>
+
+<!-- Blank Area -->
+<div class="blank"></div>
+
+<button class="install">
+⬇ Install
+</button>
+
+</div>
+
+</div>
+
+</body>
+</html>
