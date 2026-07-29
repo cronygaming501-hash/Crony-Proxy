@@ -13,7 +13,7 @@
       font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
     }
 
-    /* Colorful Gaming Ambient Background */
+    /* Ambient Background Styles */
     body {
       background-color: #0b0c10;
       background-image: 
@@ -90,15 +90,15 @@
       background-color: #000;
     }
 
-    /* Actual HTML5 Video Tag */
     .video-element {
       width: 100%;
       height: 100%;
       object-fit: cover;
       display: block;
+      cursor: pointer;
     }
 
-    /* Video Overlay Controls UI */
+    /* Overlay Controls UI */
     .video-overlay {
       position: absolute;
       top: 0;
@@ -110,11 +110,11 @@
       flex-direction: column;
       justify-content: space-between;
       background: linear-gradient(180deg, rgba(0,0,0,0.6) 0%, transparent 40%, transparent 60%, rgba(0,0,0,0.8) 100%);
-      pointer-events: none; /* Allows click through to video if needed */
+      pointer-events: none;
     }
 
     .video-overlay * {
-      pointer-events: auto; /* Enable clicks on buttons */
+      pointer-events: auto;
     }
 
     .video-header-controls,
@@ -141,7 +141,7 @@
       gap: 12px;
     }
 
-    /* Video Center Controls */
+    /* Center Controls */
     .video-center-controls {
       display: flex;
       justify-content: space-around;
@@ -161,25 +161,29 @@
     /* Progress Bar */
     .progress-bar-container {
       flex: 1;
-      height: 3px;
+      height: 4px;
       background-color: rgba(255, 255, 255, 0.3);
       border-radius: 2px;
       margin: 0 10px;
       position: relative;
+      cursor: pointer;
     }
 
     .progress-fill {
-      width: 35%; /* Progress indicator */
+      width: 0%;
       height: 100%;
       background-color: #00e676;
       border-radius: 2px;
       box-shadow: 0 0 6px #00e676;
+      transition: width 0.1s linear;
     }
 
     .timestamp {
-      font-size: 12px;
+      font-size: 11px;
       color: #cccccc;
-      font-weight: 500;
+      font-weight: 600;
+      min-width: 35px;
+      text-align: center;
     }
 
     /* Stats Section */
@@ -232,7 +236,6 @@
       margin-top: 2px;
     }
 
-    /* Live Dot */
     .live-dot {
       width: 10px;
       height: 10px;
@@ -248,7 +251,7 @@
       100% { opacity: 1; transform: scale(1); }
     }
 
-    /* Gradient Border Card Section */
+    /* Promo Card Section */
     .promo-card-wrapper {
       width: 100%;
       padding: 2px;
@@ -266,7 +269,6 @@
       gap: 16px;
     }
 
-    /* Badges */
     .badge-container {
       display: flex;
       gap: 8px;
@@ -291,25 +293,32 @@
       box-shadow: 0 0 10px rgba(108, 92, 231, 0.4);
     }
 
-    /* Card Details */
     .card-body {
       display: flex;
       gap: 14px;
       align-items: center;
     }
 
+    /* Strict PNG Image Box (Prevents Image Distortion/Bigger Size) */
     .app-icon {
-      width: 72px;
-      height: 72px;
+      width: 72px !important;
+      height: 72px !important;
+      max-width: 72px !important;
+      max-height: 72px !important;
+      min-width: 72px !important;
+      min-height: 72px !important;
+      flex-shrink: 0;
       border-radius: 16px;
-      object-fit: cover;
+      object-fit: contain;
       box-shadow: 0 4px 12px rgba(0, 0, 0, 0.6);
+      background-color: #15161c;
     }
 
     .card-details {
       display: flex;
       flex-direction: column;
       gap: 4px;
+      overflow: hidden;
     }
 
     .card-title {
@@ -370,77 +379,68 @@
 <body>
 
   <div class="app-container">
-    <!-- Top Header -->
     <header class="header">
       <h1>Garena Free Fire Team</h1>
     </header>
 
-    <!-- Main Section -->
     <main class="content">
       <h2 class="section-title">WATCH FULL VIDEO</h2>
 
-      <!-- Video Player Component with HTML5 Video Tag -->
+      <!-- Video Player Component -->
       <div class="video-card">
-        <!-- Real HTML Video Element -->
+        
+        <!-- ========================================================= -->
+        <!-- VIDEO & POSTER PNG URLS GO HERE -->
+        <!-- ========================================================= -->
         <video 
+          id="myVideo" 
           class="video-element" 
-          src="Proxy_Server_GGM_Portal_💎🎁(1080p).mp4" 
-          poster="Screenshot 2026-07-28 182305.png"
-          playsinline>
+          playsinline 
+          src="https://www.w3schools.com/html/mov_bbb.mp4" 
+          poster="https://via.placeholder.com/640x360/0a0f1d/ffffff?text=Video+Thumbnail+PNG">
         </video>
 
-        <!-- Video UI Overlay -->
+        <!-- Video Controls Overlay -->
         <div class="video-overlay">
-          <!-- Top Video Controls -->
           <div class="video-header-controls">
             <div class="icon-group">
               <button class="icon-btn" aria-label="Expand">
                 <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/></svg>
               </button>
-              <button class="icon-btn" aria-label="Picture in Picture">
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="4" width="20" height="16" rx="2"/><rect x="12" y="10" width="8" height="8" rx="1"/></svg>
-              </button>
             </div>
-            <button class="icon-btn" aria-label="Volume">
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M15.54 8.46a5 5 0 0 1 0 7.07"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14"/></svg>
+            <button class="icon-btn" id="muteBtn" aria-label="Volume">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M15.54 8.46a5 5 0 0 1 0 7.07"/></svg>
             </button>
           </div>
 
-          <!-- Center Controls -->
+          <!-- Video Controls: Play/Pause/Skip -->
           <div class="video-center-controls">
-            <button class="icon-btn" aria-label="Rewind 10 seconds">
+            <button class="icon-btn" id="rewindBtn" aria-label="Rewind 10s">
               <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5V1L7 6l5 5V7c3.31 0 6 2.69 6 6s-2.69 6-6 6-6-2.69-6-6H4c0 4.42 3.58 8 8 8s8-3.58 8-8-3.58-8-8-8z"/><text x="9.5" y="15" fill="currentColor" font-size="7" font-weight="bold" stroke="none">10</text></svg>
             </button>
-            <button class="play-btn" aria-label="Play">
-              <svg width="40" height="40" viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+
+            <button class="play-btn" id="playBtn" aria-label="Play">
+              <svg id="playIcon" width="40" height="40" viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+              <svg id="pauseIcon" width="40" height="40" viewBox="0 0 24 24" fill="currentColor" style="display: none;"><rect x="6" y="4" width="4" height="16"/><rect x="14" y="4" width="4" height="16"/></svg>
             </button>
-            <button class="icon-btn" aria-label="Forward 10 seconds">
+
+            <button class="icon-btn" id="forwardBtn" aria-label="Forward 10s">
               <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5V1l5 5-5 5V7c-3.31 0-6 2.69-6 6s2.69 6 6 6 8-3.58 8-8H20c0 4.42-3.58 8-8 8s-8-3.58-8-8 3.58-8 8-8z"/><text x="9.5" y="15" fill="currentColor" font-size="7" font-weight="bold" stroke="none">10</text></svg>
             </button>
           </div>
 
-          <!-- Footer Progress Controls -->
           <div class="video-footer-controls">
-            <span class="timestamp">00:00</span>
-            <div class="progress-bar-container">
-              <div class="progress-fill"></div>
+            <span class="timestamp" id="currentTime">00:00</span>
+            <div class="progress-bar-container" id="progressContainer">
+              <div class="progress-fill" id="progressFill"></div>
             </div>
-            <span class="timestamp">-00:31</span>
-            <div class="icon-group" style="margin-left: 8px;">
-              <button class="icon-btn" aria-label="Cast">
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 16.1A5 5 0 0 1 5.9 20M2 12.05A9 9 0 0 1 9.95 20M2 8V6a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2h-6"/><line x1="2" y1="20" x2="2.01" y2="20"/></svg>
-              </button>
-              <button class="icon-btn" aria-label="More options">
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><circle cx="12" cy="12" r="2"/><circle cx="5" cy="12" r="2"/><circle cx="19" cy="12" r="2"/></svg>
-              </button>
-            </div>
+            <span class="timestamp" id="durationTime">00:00</span>
           </div>
         </div>
       </div>
 
-      <!-- Middle Stats Section -->
+      <!-- Stats Counters -->
       <div class="stats-container">
-        <!-- Downloads Counter -->
         <div class="stat-box">
           <div class="stat-icon-wrapper">
             <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#60c5ef" stroke-width="2.5"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
@@ -451,7 +451,6 @@
           </div>
         </div>
 
-        <!-- Members Online Counter -->
         <div class="stat-box">
           <div class="stat-icon-wrapper">
             <div class="live-dot"></div>
@@ -463,7 +462,7 @@
         </div>
       </div>
 
-      <!-- Proxy Server Promo Card -->
+      <!-- App Promo Card -->
       <div class="promo-card-wrapper">
         <div class="promo-card">
           <div class="badge-container">
@@ -472,7 +471,11 @@
           </div>
 
           <div class="card-body">
-            <img src="grok_image_1784968853364.jpg" />
+            <!-- ========================================================= -->
+            <!-- APP LOGO PNG IMAGE URL GOES HERE -->
+            <!-- ========================================================= -->
+            <img src="https://via.placeholder.com/150/11052C/FFFFFF?text=App+Icon+PNG" alt="App PNG Icon" class="app-icon" />
+            
             <div class="card-details">
               <h3 class="card-title">PROXY SERVER</h3>
               <p class="card-subtitle">FREE FIRE PROXY SERVER<br>UNLIMITED ACCESS</p>
@@ -480,7 +483,7 @@
             </div>
           </div>
 
-          <a href="https://shorturl.at/xsApx" target="install" rel="noopener noreferrer" class="install-btn">
+          <a href="https://your-download-link.com" target="_blank" rel="noopener noreferrer" class="install-btn">
             <div class="btn-icon-box">
               <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M12 5v14M19 12l-7 7-7-7"/></svg>
             </div>
@@ -491,5 +494,77 @@
     </main>
   </div>
 
+  <!-- JavaScript logic for Custom Player -->
+  <script>
+    const video = document.getElementById('myVideo');
+    const playBtn = document.getElementById('playBtn');
+    const playIcon = document.getElementById('playIcon');
+    const pauseIcon = document.getElementById('pauseIcon');
+    const progressFill = document.getElementById('progressFill');
+    const progressContainer = document.getElementById('progressContainer');
+    const currentTimeEl = document.getElementById('currentTime');
+    const durationTimeEl = document.getElementById('durationTime');
+    const rewindBtn = document.getElementById('rewindBtn');
+    const forwardBtn = document.getElementById('forwardBtn');
+    const muteBtn = document.getElementById('muteBtn');
+
+    // Play/Pause Action
+    function togglePlay() {
+      if (video.paused) {
+        video.play();
+        playIcon.style.display = 'none';
+        pauseIcon.style.display = 'block';
+      } else {
+        video.pause();
+        playIcon.style.display = 'block';
+        pauseIcon.style.display = 'none';
+      }
+    }
+
+    playBtn.addEventListener('click', togglePlay);
+    video.addEventListener('click', togglePlay);
+
+    // Format Time Function
+    function formatTime(seconds) {
+      let min = Math.floor(seconds / 60);
+      let sec = Math.floor(seconds % 60);
+      if (sec < 10) sec = '0' + sec;
+      if (min < 10) min = '0' + min;
+      return `${min}:${sec}`;
+    }
+
+    // Live Progress Update
+    video.addEventListener('timeupdate', () => {
+      if (video.duration) {
+        const percent = (video.currentTime / video.duration) * 100;
+        progressFill.style.width = `${percent}%`;
+        currentTimeEl.innerText = formatTime(video.currentTime);
+        durationTimeEl.innerText = '-' + formatTime(video.duration - video.currentTime);
+      }
+    });
+
+    // Interactive Progress Bar Seeking
+    progressContainer.addEventListener('click', (e) => {
+      const rect = progressContainer.getBoundingClientRect();
+      const pos = (e.clientX - rect.left) / rect.width;
+      video.currentTime = pos * video.duration;
+    });
+
+    // Rewind 10 Seconds
+    rewindBtn.addEventListener('click', () => {
+      video.currentTime = Math.max(0, video.currentTime - 10);
+    });
+
+    // Forward 10 Seconds
+    forwardBtn.addEventListener('click', () => {
+      video.currentTime = Math.min(video.duration, video.currentTime + 10);
+    });
+
+    // Mute / Unmute Toggle
+    muteBtn.addEventListener('click', () => {
+      video.muted = !video.muted;
+      muteBtn.style.opacity = video.muted ? '0.4' : '1';
+    });
+  </script>
 </body>
 </html>
