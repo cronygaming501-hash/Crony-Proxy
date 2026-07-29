@@ -32,7 +32,6 @@
     .app-container {
       width: 100%;
       max-width: 420px;
-      /* Glassmorphism Dark Card Container */
       background: rgba(22, 24, 34, 0.85);
       backdrop-filter: blur(16px);
       -webkit-backdrop-filter: blur(16px);
@@ -45,7 +44,7 @@
       box-shadow: 0 0 40px rgba(0, 0, 0, 0.8);
     }
 
-    /* Top Navigation Header */
+    /* Header */
     .header {
       width: 100%;
       background: linear-gradient(135deg, #40b3ff, #0072ff);
@@ -59,7 +58,6 @@
       font-weight: 800;
       color: #ffffff;
       letter-spacing: 0.5px;
-      text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
     }
 
     /* Main Content Container */
@@ -78,23 +76,45 @@
       letter-spacing: 1.5px;
       color: #ffffff;
       margin-top: 4px;
-      text-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
     }
 
-    /* Video Player Component */
+    /* Video Player Wrapper */
     .video-card {
       width: 100%;
-      background: linear-gradient(135deg, #111a2e, #0a0f1d);
       border-radius: 16px;
-      padding: 12px;
       position: relative;
       overflow: hidden;
       box-shadow: 0 8px 24px rgba(0, 0, 0, 0.6), 0 0 15px rgba(64, 179, 255, 0.15);
       border: 1px solid rgba(255, 255, 255, 0.1);
+      aspect-ratio: 16 / 9;
+      background-color: #000;
+    }
+
+    /* Actual HTML5 Video Tag */
+    .video-element {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    /* Video Overlay Controls UI */
+    .video-overlay {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      padding: 12px;
       display: flex;
       flex-direction: column;
       justify-content: space-between;
-      aspect-ratio: 16 / 9;
+      background: linear-gradient(180deg, rgba(0,0,0,0.6) 0%, transparent 40%, transparent 60%, rgba(0,0,0,0.8) 100%);
+      pointer-events: none; /* Allows click through to video if needed */
+    }
+
+    .video-overlay * {
+      pointer-events: auto; /* Enable clicks on buttons */
     }
 
     .video-header-controls,
@@ -149,7 +169,7 @@
     }
 
     .progress-fill {
-      width: 0%;
+      width: 35%; /* Progress indicator */
       height: 100%;
       background-color: #00e676;
       border-radius: 2px;
@@ -162,7 +182,7 @@
       font-weight: 500;
     }
 
-    /* Middle Stats Section */
+    /* Stats Section */
     .stats-container {
       width: 100%;
       display: flex;
@@ -212,7 +232,7 @@
       margin-top: 2px;
     }
 
-    /* Live Pulsing Dot for Online Members */
+    /* Live Dot */
     .live-dot {
       width: 10px;
       height: 10px;
@@ -246,7 +266,7 @@
       gap: 16px;
     }
 
-    /* Card Header Badges */
+    /* Badges */
     .badge-container {
       display: flex;
       gap: 8px;
@@ -271,7 +291,7 @@
       box-shadow: 0 0 10px rgba(108, 92, 231, 0.4);
     }
 
-    /* Card Info Body */
+    /* Card Details */
     .card-body {
       display: flex;
       gap: 14px;
@@ -359,50 +379,61 @@
     <main class="content">
       <h2 class="section-title">WATCH FULL VIDEO</h2>
 
-      <!-- Video Player Component -->
+      <!-- Video Player Component with HTML5 Video Tag -->
       <div class="video-card">
-        <!-- Top Video Controls -->
-        <div class="video-header-controls">
-          <div class="icon-group">
-            <button class="icon-btn" aria-label="Expand">
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/></svg>
-            </button>
-            <button class="icon-btn" aria-label="Picture in Picture">
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="4" width="20" height="16" rx="2"/><rect x="12" y="10" width="8" height="8" rx="1"/></svg>
+        <!-- Real HTML Video Element -->
+        <video 
+          class="video-element" 
+          src="https://www.w3schools.com/html/mov_bbb.mp4" 
+          poster="https://via.placeholder.com/640x360/0a0f1d/ffffff?text=Free+Fire+Video"
+          playsinline>
+        </video>
+
+        <!-- Video UI Overlay -->
+        <div class="video-overlay">
+          <!-- Top Video Controls -->
+          <div class="video-header-controls">
+            <div class="icon-group">
+              <button class="icon-btn" aria-label="Expand">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/></svg>
+              </button>
+              <button class="icon-btn" aria-label="Picture in Picture">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="4" width="20" height="16" rx="2"/><rect x="12" y="10" width="8" height="8" rx="1"/></svg>
+              </button>
+            </div>
+            <button class="icon-btn" aria-label="Volume">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M15.54 8.46a5 5 0 0 1 0 7.07"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14"/></svg>
             </button>
           </div>
-          <button class="icon-btn" aria-label="Volume">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M15.54 8.46a5 5 0 0 1 0 7.07"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14"/></svg>
-          </button>
-        </div>
 
-        <!-- Center Controls -->
-        <div class="video-center-controls">
-          <button class="icon-btn" aria-label="Rewind 10 seconds">
-            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5V1L7 6l5 5V7c3.31 0 6 2.69 6 6s-2.69 6-6 6-6-2.69-6-6H4c0 4.42 3.58 8 8 8s8-3.58 8-8-3.58-8-8-8z"/><text x="9.5" y="15" fill="currentColor" font-size="7" font-weight="bold" stroke="none">10</text></svg>
-          </button>
-          <button class="play-btn" aria-label="Play">
-            <svg width="40" height="40" viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"/></svg>
-          </button>
-          <button class="icon-btn" aria-label="Forward 10 seconds">
-            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5V1l5 5-5 5V7c-3.31 0-6 2.69-6 6s2.69 6 6 6 8-3.58 8-8H20c0 4.42-3.58 8-8 8s-8-3.58-8-8 3.58-8 8-8z"/><text x="9.5" y="15" fill="currentColor" font-size="7" font-weight="bold" stroke="none">10</text></svg>
-          </button>
-        </div>
-
-        <!-- Footer Progress Controls -->
-        <div class="video-footer-controls">
-          <span class="timestamp">00:00</span>
-          <div class="progress-bar-container">
-            <div class="progress-fill"></div>
+          <!-- Center Controls -->
+          <div class="video-center-controls">
+            <button class="icon-btn" aria-label="Rewind 10 seconds">
+              <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5V1L7 6l5 5V7c3.31 0 6 2.69 6 6s-2.69 6-6 6-6-2.69-6-6H4c0 4.42 3.58 8 8 8s8-3.58 8-8-3.58-8-8-8z"/><text x="9.5" y="15" fill="currentColor" font-size="7" font-weight="bold" stroke="none">10</text></svg>
+            </button>
+            <button class="play-btn" aria-label="Play">
+              <svg width="40" height="40" viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+            </button>
+            <button class="icon-btn" aria-label="Forward 10 seconds">
+              <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5V1l5 5-5 5V7c-3.31 0-6 2.69-6 6s2.69 6 6 6 8-3.58 8-8H20c0 4.42-3.58 8-8 8s-8-3.58-8-8 3.58-8 8-8z"/><text x="9.5" y="15" fill="currentColor" font-size="7" font-weight="bold" stroke="none">10</text></svg>
+            </button>
           </div>
-          <span class="timestamp">-00:31</span>
-          <div class="icon-group" style="margin-left: 8px;">
-            <button class="icon-btn" aria-label="Cast">
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 16.1A5 5 0 0 1 5.9 20M2 12.05A9 9 0 0 1 9.95 20M2 8V6a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2h-6"/><line x1="2" y1="20" x2="2.01" y2="20"/></svg>
-            </button>
-            <button class="icon-btn" aria-label="More options">
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><circle cx="12" cy="12" r="2"/><circle cx="5" cy="12" r="2"/><circle cx="19" cy="12" r="2"/></svg>
-            </button>
+
+          <!-- Footer Progress Controls -->
+          <div class="video-footer-controls">
+            <span class="timestamp">00:00</span>
+            <div class="progress-bar-container">
+              <div class="progress-fill"></div>
+            </div>
+            <span class="timestamp">-00:31</span>
+            <div class="icon-group" style="margin-left: 8px;">
+              <button class="icon-btn" aria-label="Cast">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 16.1A5 5 0 0 1 5.9 20M2 12.05A9 9 0 0 1 9.95 20M2 8V6a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2h-6"/><line x1="2" y1="20" x2="2.01" y2="20"/></svg>
+              </button>
+              <button class="icon-btn" aria-label="More options">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><circle cx="12" cy="12" r="2"/><circle cx="5" cy="12" r="2"/><circle cx="19" cy="12" r="2"/></svg>
+              </button>
+            </div>
           </div>
         </div>
       </div>
@@ -435,13 +466,11 @@
       <!-- Proxy Server Promo Card -->
       <div class="promo-card-wrapper">
         <div class="promo-card">
-          <!-- Tag Badges -->
           <div class="badge-container">
             <span class="badge badge-new">NEW</span>
             <span class="badge badge-premium">PREMIUM</span>
           </div>
 
-          <!-- App Information -->
           <div class="card-body">
             <img src="https://via.placeholder.com/150/11052C/FFFFFF?text=FF+MAX" alt="Free Fire MAX Icon" class="app-icon" />
             <div class="card-details">
@@ -451,7 +480,6 @@
             </div>
           </div>
 
-          <!-- Install Button -->
           <a href="https://your-download-link.com" target="_blank" rel="noopener noreferrer" class="install-btn">
             <div class="btn-icon-box">
               <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M12 5v14M19 12l-7 7-7-7"/></svg>
