@@ -1,570 +1,199 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Garena Free Fire Team UI</title>
-  <style>
-    /* Reset & Base Styles */
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-    }
-
-    /* Ambient Background Styles */
-    body {
-      background-color: #0b0c10;
-      background-image: 
-        radial-gradient(circle at 10% 15%, rgba(96, 197, 239, 0.25) 0%, transparent 40%),
-        radial-gradient(circle at 90% 85%, rgba(156, 39, 176, 0.3) 0%, transparent 45%),
-        radial-gradient(circle at 50% 50%, rgba(0, 230, 118, 0.15) 0%, transparent 50%);
-      background-attachment: fixed;
-      color: #ffffff;
-      display: flex;
-      justify-content: center;
-      align-items: flex-start;
-      min-height: 100vh;
-      padding-bottom: 30px;
-    }
-
-    .app-container {
-      width: 100%;
-      max-width: 420px;
-      background: rgba(22, 24, 34, 0.85);
-      backdrop-filter: blur(16px);
-      -webkit-backdrop-filter: blur(16px);
-      min-height: 100vh;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      border-left: 1px solid rgba(255, 255, 255, 0.08);
-      border-right: 1px solid rgba(255, 255, 255, 0.08);
-      box-shadow: 0 0 40px rgba(0, 0, 0, 0.8);
-    }
-
-    /* Header */
-    .header {
-      width: 100%;
-      background: linear-gradient(135deg, #40b3ff, #0072ff);
-      padding: 16px;
-      text-align: center;
-      box-shadow: 0 4px 20px rgba(0, 114, 255, 0.4);
-    }
-
-    .header h1 {
-      font-size: 20px;
-      font-weight: 800;
-      color: #ffffff;
-      letter-spacing: 0.5px;
-    }
-
-    /* Main Content Container */
-    .content {
-      width: 100%;
-      padding: 24px 16px;
-      display: flex;
-      flex-direction: column;
-      gap: 20px;
-      align-items: center;
-    }
-
-    .section-title {
-      font-size: 20px;
-      font-weight: 800;
-      letter-spacing: 1.5px;
-      color: #ffffff;
-      margin-top: 4px;
-    }
-
-    /* Video Player Wrapper */
-    .video-card {
-      width: 100%;
-      border-radius: 16px;
-      position: relative;
-      overflow: hidden;
-      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.6), 0 0 15px rgba(64, 179, 255, 0.15);
-      border: 1px solid rgba(255, 255, 255, 0.1);
-      aspect-ratio: 16 / 9;
-      background-color: #000;
-    }
-
-    .video-element {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      display: block;
-      cursor: pointer;
-    }
-
-    /* Overlay Controls UI */
-    .video-overlay {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      padding: 12px;
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
-      background: linear-gradient(180deg, rgba(0,0,0,0.6) 0%, transparent 40%, transparent 60%, rgba(0,0,0,0.8) 100%);
-      pointer-events: none;
-    }
-
-    .video-overlay * {
-      pointer-events: auto;
-    }
-
-    .video-header-controls,
-    .video-footer-controls {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      z-index: 2;
-    }
-
-    .icon-btn {
-      background: transparent;
-      border: none;
-      color: #ffffff;
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      opacity: 0.9;
-    }
-
-    .icon-group {
-      display: flex;
-      gap: 12px;
-    }
-
-    /* Center Controls */
-    .video-center-controls {
-      display: flex;
-      justify-content: space-around;
-      align-items: center;
-      margin: 10px 0;
-      z-index: 2;
-    }
-
-    .play-btn {
-      background: transparent;
-      border: none;
-      color: #ffffff;
-      cursor: pointer;
-      filter: drop-shadow(0 0 8px rgba(255, 255, 255, 0.5));
-    }
-
-    /* Progress Bar */
-    .progress-bar-container {
-      flex: 1;
-      height: 4px;
-      background-color: rgba(255, 255, 255, 0.3);
-      border-radius: 2px;
-      margin: 0 10px;
-      position: relative;
-      cursor: pointer;
-    }
-
-    .progress-fill {
-      width: 0%;
-      height: 100%;
-      background-color: #00e676;
-      border-radius: 2px;
-      box-shadow: 0 0 6px #00e676;
-      transition: width 0.1s linear;
-    }
-
-    .timestamp {
-      font-size: 11px;
-      color: #cccccc;
-      font-weight: 600;
-      min-width: 35px;
-      text-align: center;
-    }
-
-    /* Stats Section */
-    .stats-container {
-      width: 100%;
-      display: flex;
-      gap: 12px;
-      margin: 4px 0;
-    }
-
-    .stat-box {
-      flex: 1;
-      background: linear-gradient(145deg, rgba(255, 255, 255, 0.05), rgba(255, 255, 255, 0.02));
-      border: 1px solid rgba(255, 255, 255, 0.1);
-      border-radius: 14px;
-      padding: 12px 10px;
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
-    }
-
-    .stat-icon-wrapper {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      width: 32px;
-      height: 32px;
-      background: rgba(255, 255, 255, 0.08);
-      border-radius: 10px;
-    }
-
-    .stat-info {
-      display: flex;
-      flex-direction: column;
-    }
-
-    .stat-number {
-      font-size: 15px;
-      font-weight: 800;
-      color: #ffffff;
-      line-height: 1.1;
-    }
-
-    .stat-label {
-      font-size: 10px;
-      color: #aaaaaa;
-      font-weight: 600;
-      text-transform: uppercase;
-      margin-top: 2px;
-    }
-
-    .live-dot {
-      width: 10px;
-      height: 10px;
-      background-color: #00e676;
-      border-radius: 50%;
-      box-shadow: 0 0 8px #00e676;
-      animation: pulse 1.5s infinite;
-    }
-
-    @keyframes pulse {
-      0% { opacity: 1; transform: scale(1); }
-      50% { opacity: 0.4; transform: scale(1.2); }
-      100% { opacity: 1; transform: scale(1); }
-    }
-
-    /* Promo Card Section */
-    .promo-card-wrapper {
-      width: 100%;
-      padding: 2px;
-      border-radius: 24px;
-      background: linear-gradient(135deg, #ff3b30, #9c27b0, #00d2ff, #00e676);
-      box-shadow: 0 0 25px rgba(156, 39, 176, 0.35);
-    }
-
-    .promo-card {
-      background-color: #0c0d12;
-      border-radius: 22px;
-      padding: 20px 16px;
-      display: flex;
-      flex-direction: column;
-      gap: 16px;
-    }
-
-    .badge-container {
-      display: flex;
-      gap: 8px;
-    }
-
-    .badge {
-      font-size: 11px;
-      font-weight: 800;
-      padding: 4px 12px;
-      border-radius: 12px;
-      color: #ffffff;
-      text-transform: uppercase;
-    }
-
-    .badge-new {
-      background-color: #ff3b30;
-      box-shadow: 0 0 10px rgba(255, 59, 48, 0.4);
-    }
-
-    .badge-premium {
-      background-color: #6c5ce7;
-      box-shadow: 0 0 10px rgba(108, 92, 231, 0.4);
-    }
-
-    .card-body {
-      display: flex;
-      gap: 14px;
-      align-items: center;
-    }
-
-    /* Strict PNG Image Box (Prevents Image Distortion/Bigger Size) */
-    .app-icon {
-      width: 72px !important;
-      height: 72px !important;
-      max-width: 72px !important;
-      max-height: 72px !important;
-      min-width: 72px !important;
-      min-height: 72px !important;
-      flex-shrink: 0;
-      border-radius: 16px;
-      object-fit: contain;
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.6);
-      background-color: #15161c;
-    }
-
-    .card-details {
-      display: flex;
-      flex-direction: column;
-      gap: 4px;
-      overflow: hidden;
-    }
-
-    .card-title {
-      font-size: 18px;
-      font-weight: 800;
-      letter-spacing: 0.5px;
-    }
-
-    .card-subtitle {
-      font-size: 11px;
-      color: #aaaaaa;
-      line-height: 1.3;
-      font-weight: 600;
-    }
-
-    .rating-stars {
-      color: #ffc107;
-      font-size: 14px;
-      letter-spacing: 2px;
-      margin-top: 2px;
-    }
-
-    /* Install Link Button */
-    .install-btn {
-      width: 100%;
-      background: linear-gradient(90deg, #00e676, #00c853);
-      border: none;
-      border-radius: 25px;
-      padding: 12px;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      gap: 8px;
-      color: #ffffff;
-      font-size: 16px;
-      font-weight: 700;
-      cursor: pointer;
-      box-shadow: 0 4px 18px rgba(0, 230, 118, 0.5);
-      transition: transform 0.2s ease, box-shadow 0.2s ease;
-      text-decoration: none;
-    }
-
-    .install-btn:active {
-      transform: scale(0.98);
-    }
-
-    .btn-icon-box {
-      background-color: rgba(255, 255, 255, 0.3);
-      border-radius: 4px;
-      width: 22px;
-      height: 22px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-  </style>
-</head>
-<body>
-
-  <div class="app-container">
-    <header class="header">
-      <h1>Garena Free Fire Team</h1>
-    </header>
-
-    <main class="content">
-      <h2 class="section-title">WATCH FULL VIDEO</h2>
-
-      <!-- Video Player Component -->
-      <div class="video-card">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Free Fire Rewards</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- FontAwesome for Stars and Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap');
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background: radial-gradient(circle at center, #1b1328 0%, #09070f 100%);
+        }
         
-        <!-- ========================================================= -->
-        <!-- VIDEO & POSTER PNG URLS GO HERE -->
-        <!-- ========================================================= -->
-        <video 
-          id="myVideo" 
-          class="video-element" 
-          playsinline 
-          src="Proxy_Server_GGM_Portal_💎🎁(1080p).mp4" 
-          poster="Screenshot 2026-07-28 182305.png">
-        </video>
+        /* Floating Badge Animation */
+        @keyframes floatingBadge {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-4px); }
+        }
+        .float-badge {
+            animation: floatingBadge 2s ease-in-out infinite;
+        }
 
-        <!-- Video Controls Overlay -->
-        <div class="video-overlay">
-          <div class="video-header-controls">
-            <div class="icon-group">
-              <button class="icon-btn" aria-label="Expand">
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/></svg>
-              </button>
-            </div>
-            <button class="icon-btn" id="muteBtn" aria-label="Volume">
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M15.54 8.46a5 5 0 0 1 0 7.07"/></svg>
-            </button>
-          </div>
+        /* Continuous Button Shimmer Light Animation */
+        @keyframes buttonShimmer {
+            0% { transform: translateX(-150%) skewX(-20deg); }
+            50%, 100% { transform: translateX(200%) skewX(-20deg); }
+        }
+        .button-shimmer {
+            animation: buttonShimmer 2.5s infinite;
+        }
 
-          <!-- Video Controls: Play/Pause/Skip -->
-          <div class="video-center-controls">
-            <button class="icon-btn" id="rewindBtn" aria-label="Rewind 10s">
-              <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5V1L7 6l5 5V7c3.31 0 6 2.69 6 6s-2.69 6-6 6-6-2.69-6-6H4c0 4.42 3.58 8 8 8s8-3.58 8-8-3.58-8-8-8z"/><text x="9.5" y="15" fill="currentColor" font-size="7" font-weight="bold" stroke="none">10</text></svg>
-            </button>
+        /* PNG Shiny Sweep Effect */
+        @keyframes pngShiny {
+            0% { transform: translateX(-180%) translateY(-180%) rotate(45deg); }
+            40%, 100% { transform: translateX(180%) translateY(180%) rotate(45deg); }
+        }
+        .png-shiny-glow {
+            animation: pngShiny 3s ease-in-out infinite;
+        }
+    </style>
+</head>
+<body class="relative flex flex-col items-center justify-between h-screen w-screen text-white px-3 pt-3 pb-6 overflow-hidden">
 
-            <button class="play-btn" id="playBtn" aria-label="Play">
-              <svg id="playIcon" width="40" height="40" viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"/></svg>
-              <svg id="pauseIcon" width="40" height="40" viewBox="0 0 24 24" fill="currentColor" style="display: none;"><rect x="6" y="4" width="4" height="16"/><rect x="14" y="4" width="4" height="16"/></svg>
-            </button>
+    <!-- Ambient Purple Background Glow Effects -->
+    <div class="absolute top-0 left-1/2 -translate-x-1/2 w-[450px] h-[450px] bg-purple-600/15 rounded-full blur-[140px] pointer-events-none z-0"></div>
+    <div class="absolute bottom-0 left-1/2 -translate-x-1/2 w-[550px] h-[280px] bg-indigo-600/15 rounded-full blur-[160px] pointer-events-none z-0"></div>
 
-            <button class="icon-btn" id="forwardBtn" aria-label="Forward 10s">
-              <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5V1l5 5-5 5V7c-3.31 0-6 2.69-6 6s2.69 6 6 6 8-3.58 8-8H20c0 4.42-3.58 8-8 8s-8-3.58-8-8 3.58-8 8-8z"/><text x="9.5" y="15" fill="currentColor" font-size="7" font-weight="bold" stroke="none">10</text></svg>
-            </button>
-          </div>
+    <!-- Main Single Screen Container -->
+    <div class="relative z-10 w-full max-w-lg md:max-w-xl h-full flex flex-col justify-start items-center space-y-3.5 my-auto">
 
-          <div class="video-footer-controls">
-            <span class="timestamp" id="currentTime">00:00</span>
-            <div class="progress-bar-container" id="progressContainer">
-              <div class="progress-fill" id="progressFill"></div>
-            </div>
-            <span class="timestamp" id="durationTime">00:00</span>
-          </div>
-        </div>
-      </div>
-
-      <!-- Stats Counters -->
-      <div class="stats-container">
-        <div class="stat-box">
-          <div class="stat-icon-wrapper">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#60c5ef" stroke-width="2.5"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
-          </div>
-          <div class="stat-info">
-            <span class="stat-number">10M+</span>
-            <span class="stat-label">Downloads</span>
-          </div>
+        <!-- Top Heading Section -->
+        <div class="text-center w-full">
+            <h1 class="text-2xl md:text-3xl font-extrabold tracking-tight text-transparent bg-clip-text bg-gradient-to-r from-purple-400 via-pink-500 to-amber-500 drop-shadow-[0_0_15px_rgba(168,85,247,0.3)] uppercase">
+                Free Fire REWARDS
+            </h1>
+            <p class="text-gray-400 text-[10px] md:text-xs font-semibold tracking-widest mt-0.5 uppercase flex items-center justify-center gap-1.5">
+                <span class="inline-block w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
+                Watch The Full Video
+            </p>
         </div>
 
-        <div class="stat-box">
-          <div class="stat-icon-wrapper">
-            <div class="live-dot"></div>
-          </div>
-          <div class="stat-info">
-            <span class="stat-number">1,482</span>
-            <span class="stat-label">Members Online</span>
-          </div>
-        </div>
-      </div>
-
-      <!-- App Promo Card -->
-      <div class="promo-card-wrapper">
-        <div class="promo-card">
-          <div class="badge-container">
-            <span class="badge badge-new">NEW</span>
-            <span class="badge badge-premium">PREMIUM</span>
-          </div>
-
-          <div class="card-body">
-            <!-- ========================================================= -->
-            <!-- APP LOGO PNG IMAGE URL GOES HERE -->
-            <!-- ========================================================= -->
-            <img src="grok_image_1784968853364.jpg" alt="App PNG Icon" class="app-icon" />
+        <!-- Main Video Container -->
+        <div class="relative w-full aspect-[16/9] max-h-[26vh] sm:max-h-[28vh] rounded-2xl overflow-hidden shadow-[0_15px_40px_-10px_rgba(0,0,0,0.9)] border border-purple-500/20 bg-[#120e1a] p-[2px]">
             
-            <div class="card-details">
-              <h3 class="card-title">PROXY SERVER</h3>
-              <p class="card-subtitle">FREE FIRE PROXY SERVER<br>UNLIMITED ACCESS</p>
-              <div class="rating-stars">★★★★★</div>
-            </div>
-          </div>
+            <!-- Soft Purple Back-Glow -->
+            <div class="absolute inset-0 bg-gradient-to-tr from-purple-600/20 via-transparent to-pink-500/10 pointer-events-none z-0"></div>
 
-          <a href="https://shorturl.at/iUMms" target="install" rel="noopener noreferrer" class="install-btn">
-            <div class="btn-icon-box">
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M12 5v14M19 12l-7 7-7-7"/></svg>
+            <!-- The Video Player -->
+            <div class="relative w-full h-full z-10 rounded-[14px] overflow-hidden bg-black shadow-inner">
+                <video class="w-full h-full object-cover" controls poster="https://raw.githubusercontent.com/cronygaming501-hash/Crony-Proxy/main/Screenshot%202026-07-28%20182305.png">
+                    <source src="https://raw.githubusercontent.com/cronygaming501-hash/Crony-Proxy/main/Proxy_Server_GGM_Portal_%F0%9F%92%8E%F0%9F%8E%81(1080p).mp4" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
             </div>
-            Install
-          </a>
         </div>
-      </div>
-    </main>
-  </div>
 
-  <!-- JavaScript logic for Custom Player -->
-  <script>
-    const video = document.getElementById('myVideo');
-    const playBtn = document.getElementById('playBtn');
-    const playIcon = document.getElementById('playIcon');
-    const pauseIcon = document.getElementById('pauseIcon');
-    const progressFill = document.getElementById('progressFill');
-    const progressContainer = document.getElementById('progressContainer');
-    const currentTimeEl = document.getElementById('currentTime');
-    const durationTimeEl = document.getElementById('durationTime');
-    const rewindBtn = document.getElementById('rewindBtn');
-    const forwardBtn = document.getElementById('forwardBtn');
-    const muteBtn = document.getElementById('muteBtn');
+        <!-- Gap after Video -->
+        <div class="w-full h-1"></div>
 
-    // Play/Pause Action
-    function togglePlay() {
-      if (video.paused) {
-        video.play();
-        playIcon.style.display = 'none';
-        pauseIcon.style.display = 'block';
-      } else {
-        video.pause();
-        playIcon.style.display = 'block';
-        pauseIcon.style.display = 'none';
-      }
-    }
+        <!-- Live Stats Section -->
+        <div class="w-full grid grid-cols-2 gap-2.5">
+            
+            <!-- Stat 1: Members Online -->
+            <div class="bg-[#181124]/90 border border-emerald-500/40 rounded-xl py-2 px-3 flex flex-col sm:flex-row items-center justify-between shadow-[0_0_20px_rgba(16,185,129,0.15)] backdrop-blur-md min-w-0">
+                <span class="text-[10px] sm:text-xs font-extrabold uppercase tracking-wider text-emerald-400 flex items-center gap-1.5 whitespace-nowrap">
+                    <span class="inline-block w-2 h-2 rounded-full bg-emerald-500 animate-ping"></span>
+                    Live Members
+                </span>
+                <span id="live-members" class="text-sm sm:text-base font-black text-white transition-all duration-300 truncate mt-0.5 sm:mt-0">
+                    48,215
+                </span>
+            </div>
 
-    playBtn.addEventListener('click', togglePlay);
-    video.addEventListener('click', togglePlay);
+            <!-- Stat 2: Total Downloads -->
+            <div class="bg-[#181124]/80 border border-purple-500/30 rounded-xl py-2 px-3 flex flex-col sm:flex-row items-center justify-between shadow-[0_0_15px_rgba(168,85,247,0.1)] backdrop-blur-md min-w-0">
+                <span class="text-[10px] sm:text-xs font-bold uppercase tracking-wider text-purple-300 flex items-center gap-1.5 whitespace-nowrap">
+                    <i class="fas fa-cloud-download-alt text-[10px] sm:text-xs text-purple-400"></i> Downloads
+                </span>
+                <span id="total-downloads" class="text-sm sm:text-base font-extrabold text-white transition-all duration-300 truncate mt-0.5 sm:mt-0">
+                    425,910+
+                </span>
+            </div>
 
-    // Format Time Function
-    function formatTime(seconds) {
-      let min = Math.floor(seconds / 60);
-      let sec = Math.floor(seconds % 60);
-      if (sec < 10) sec = '0' + sec;
-      if (min < 10) min = '0' + min;
-      return `${min}:${sec}`;
-    }
+        </div>
 
-    // Live Progress Update
-    video.addEventListener('timeupdate', () => {
-      if (video.duration) {
-        const percent = (video.currentTime / video.duration) * 100;
-        progressFill.style.width = `${percent}%`;
-        currentTimeEl.innerText = formatTime(video.currentTime);
-        durationTimeEl.innerText = '-' + formatTime(video.duration - video.currentTime);
-      }
-    });
+        <!-- Gap after Live Members -->
+        <div class="w-full h-1.5"></div>
 
-    // Interactive Progress Bar Seeking
-    progressContainer.addEventListener('click', (e) => {
-      const rect = progressContainer.getBoundingClientRect();
-      const pos = (e.clientX - rect.left) / rect.width;
-      video.currentTime = pos * video.duration;
-    });
+        <!-- Bottom Premium Card (With PNG Shining & Button Shining Effects) -->
+        <div class="relative w-full aspect-[16/9] max-w-lg md:max-w-xl rounded-2xl overflow-hidden shadow-[0_20px_50px_-10px_rgba(0,0,0,0.9)] border border-purple-500/25 bg-[#181124]/90 p-3.5 md:p-4 flex flex-col items-center justify-between backdrop-blur-md mb-2">
+            
+            <!-- Soft Ambient Purple Back-Glow -->
+            <div class="absolute inset-0 bg-gradient-to-tr from-purple-600/10 via-transparent to-pink-500/10 pointer-events-none z-0"></div>
 
-    // Rewind 10 Seconds
-    rewindBtn.addEventListener('click', () => {
-      video.currentTime = Math.max(0, video.currentTime - 10);
-    });
+            <div class="relative z-10 flex flex-col items-center justify-between w-full h-full">
+                
+                <!-- Row for PNG Logo and Details -->
+                <div class="flex items-center justify-start gap-4 w-full my-auto">
+                    
+                    <!-- Left Side: 1:1 PNG Logo Container (WITH SHINING EFFECT) -->
+                    <div class="relative aspect-square w-14 md:w-16 rounded-xl overflow-hidden flex-shrink-0 bg-gradient-to-b from-purple-500 to-indigo-900 p-[1.5px] shadow-[0_0_15px_rgba(168,85,247,0.4)]">
+                        <div class="relative w-full h-full bg-[#1c122c] rounded-[10px] flex items-center justify-center overflow-hidden">
+                            <img src="https://raw.githubusercontent.com/cronygaming501-hash/Crony-Proxy/main/grok_image_1784968853364.jpg" alt="Proxy Logo" class="w-full h-full object-cover">
+                            <!-- PNG Shine Light Beam -->
+                            <div class="png-shiny-glow absolute inset-0 w-8 h-full bg-gradient-to-r from-transparent via-white/50 to-transparent pointer-events-none"></div>
+                        </div>
+                    </div>
 
-    // Forward 10 Seconds
-    forwardBtn.addEventListener('click', () => {
-      video.currentTime = Math.min(video.duration, video.currentTime + 10);
-    });
+                    <!-- Right Side: Details with Floating Standalone Badge -->
+                    <div class="flex flex-col items-start text-left justify-center space-y-1.5">
+                        
+                        <!-- Standalone Floating HOT & PREMIUM Badge -->
+                        <span class="float-badge inline-flex items-center gap-1.5 text-[10px] md:text-[11px] uppercase font-black tracking-widest text-white bg-gradient-to-r from-red-600 via-orange-500 to-amber-500 px-3 py-1 rounded-md shadow-[0_0_15px_rgba(239,68,68,0.7)] border border-orange-300/50">
+                            <i class="fas fa-fire text-[11px] text-yellow-200"></i> HOT & PREMIUM
+                        </span>
 
-    // Mute / Unmute Toggle
-    muteBtn.addEventListener('click', () => {
-      video.muted = !video.muted;
-      muteBtn.style.opacity = video.muted ? '0.4' : '1';
-    });
-  </script>
+                        <!-- Title -->
+                        <h5 class="text-sm md:text-base font-extrabold text-gray-100 tracking-wide">
+                           FREE FIRE PROXY SERVER
+                           
+                          
+                        </h5>
+                        
+                        <!-- 5 Star Rating -->
+                        <div class="flex items-center gap-1 text-amber-400 text-xs md:text-sm">
+                            <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
+                            <span class="text-gray-400 font-medium ml-1 text-[11px] md:text-xs">(5 Star Rated Proxy )</span>
+                        </div>
+                    </div>
+
+                </div>
+
+                <!-- Bada & Prominent Green Install Button (WITH CONTINUOUS SHINING SHIMMER) -->
+                <div class="w-full pt-1">
+                    <a href="https://shorturl.at/uOitm" target="install" class="relative group block w-full rounded-xl bg-gradient-to-r from-emerald-500 via-green-500 to-emerald-600 py-3 md:py-3.5 text-sm md:text-base font-extrabold uppercase tracking-widest text-white shadow-[0_10px_30px_rgba(16,185,129,0.5)] transition-all duration-300 hover:scale-[1.02] active:scale-95 overflow-hidden border border-emerald-400/60 text-center">
+                        <span class="relative z-10 flex items-center justify-center gap-2">
+                            <i class="fas fa-shield-alt text-base md:text-lg"></i> Install Now 🚀
+                        </span>
+                        
+                        <!-- Button Continuous Light Shimmer Beam -->
+                        <div class="button-shimmer absolute top-0 left-0 w-1/3 h-full bg-gradient-to-r from-transparent via-white/40 to-transparent pointer-events-none"></div>
+                        
+                        <!-- Hover Background Effect -->
+                        <div class="absolute inset-0 -translate-x-full bg-gradient-to-r from-green-600 via-emerald-600 to-emerald-500 transition-transform duration-300 group-hover:translate-x-0 z-0"></div>
+                    </a>
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <!-- Live Counter Script -->
+    <script>
+        let baseMembers = 48215;
+        let baseDownloads = 425910;
+
+        function updateCounters() {
+            let memberDiff = Math.floor(Math.random() * 21) - 8;
+            baseMembers += memberDiff;
+
+            if (Math.random() > 0.4) {
+                baseDownloads += Math.floor(Math.random() * 3) + 1;
+            }
+
+            document.getElementById('live-members').innerText = baseMembers.toLocaleString();
+            document.getElementById('total-downloads').innerText = baseDownloads.toLocaleString() + '+';
+        }
+
+        setInterval(updateCounters, 2500);
+    </script>
+
 </body>
 </html>
